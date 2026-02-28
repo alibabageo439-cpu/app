@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Calculator Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <!-- CALCULATOR VIEW -->
+        <div id="calculator-view">
+            <div class="calc-container">
+                <div class="calc-display" id="calc-display">0</div>
+                <div class="calc-grid">
+                    <button class="calc-btn btn-func" onclick="calcAction('AC')">AC</button>
+                    <button class="calc-btn btn-func" onclick="calcAction('backspace')"><i
+                            class="fas fa-backspace"></i></button>
+                    <button class="calc-btn btn-func" onclick="calcAction('%')">%</button>
+                    <button class="calc-btn btn-op" onclick="calcAction('/')">÷</button>
+
+                    <button class="calc-btn btn-num" onclick="calcAction('7')">7</button>
+                    <button class="calc-btn btn-num" onclick="calcAction('8')">8</button>
+                    <button class="calc-btn btn-num" onclick="calcAction('9')">9</button>
+                    <button class="calc-btn btn-op" onclick="calcAction('*')">×</button>
+
+                    <button class="calc-btn btn-num" onclick="calcAction('4')">4</button>
+                    <button class="calc-btn btn-num" onclick="calcAction('5')">5</button>
+                    <button class="calc-btn btn-num" onclick="calcAction('6')">6</button>
+                    <button class="calc-btn btn-op" onclick="calcAction('-')">-</button>
+
+                    <button class="calc-btn btn-num" onclick="calcAction('1')">1</button>
+                    <button class="calc-btn btn-num" onclick="calcAction('2')">2</button>
+                    <button class="calc-btn btn-num" onclick="calcAction('3')">3</button>
+                    <button class="calc-btn btn-op" onclick="calcAction('+')">+</button>
+
+                    <button class="calc-btn btn-num btn-zero" onclick="calcAction('0')">0</button>
+                    <button class="calc-btn btn-num" onclick="calcAction('.')">.</button>
+                    <button class="calc-btn btn-op" onclick="tryUnlock()">=</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- IDENTITY SELECTION VIEW -->
+        <div id="identity-view" class="view-container" style="display: none;">
+            <div class="selection-card">
+                <h2>Who are you?</h2>
+                <div class="user-options">
+                    <div class="user-card" onclick="selectUser('A')">
+                        <div class="avatar">A</div>
+                        <span>user_A</span>
+                    </div>
+                    <div class="user-card" onclick="selectUser('S')">
+                        <div class="avatar s-avatar">S</div>
+                        <span>user_S</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- USER_A PASSWORD VIEW -->
+        <div id="user-a-pass-view" class="view-container" style="display: none;">
+            <div class="selection-card">
+                <h2>Security Check</h2>
+                <p style="margin-bottom: 20px; color: #666;">Enter password for user_A</p>
+                <input type="password" id="user-a-pass-input" placeholder="Enter Password" class="custom-input">
+                <div class="modal-buttons">
+                    <button class="modal-btn secondary" onclick="closeUserAPass()">Cancel</button>
+                    <button class="modal-btn primary" onclick="verifyUserAPass()">Verify</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

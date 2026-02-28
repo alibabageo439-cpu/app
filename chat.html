@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Private Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="chat-body">
+    <div id="chat-app">
+        <!-- Header -->
+        <header class="chat-header">
+            <div class="header-left">
+                <div class="header-user-info">
+                    <div class="avatar-small" id="target-avatar">
+                        <i class="fas fa-user"></i>
+                        <span id="online-dot" class="online-dot"></span>
+                    </div>
+                    <div class="user-text">
+                        <h3 id="target-name">Loading...</h3>
+                        <div class="status-container">
+                            <p id="target-status">Offline</p>
+                            <p id="target-activity" class="activity-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="menu-container">
+                    <button class="icon-btn" id="menu-btn" title="Menu">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <button onclick="refreshStatus()"><i class="fas fa-sync-alt"></i> Refresh Status</button>
+                        <button onclick="triggerProfileUpload()"><i class="fas fa-camera"></i> Change Profile
+                            Pic</button>
+                        <button id="change-pass-btn" onclick="changeAppPassword()"><i class="fas fa-key"></i> Change
+                            Password</button>
+                        <button onclick="clearMessages()"><i class="fas fa-trash-alt"></i> Clear Chat</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Messages Container -->
+        <main class="messages-area" id="messages-container">
+            <!-- Messages will load here -->
+        </main>
+
+        <!-- Dynamic Indicator (Typing/Recording) -->
+        <div id="activity-indicator" class="activity-indicator"></div>
+
+        <!-- Input Area -->
+        <footer class="input-area">
+            <!-- Normal Input Pill -->
+            <div class="input-wrapper" id="input-wrapper">
+                <button class="attach-btn" id="attach-btn"><i class="fas fa-paperclip"></i></button>
+                <input type="text" id="msg-input" placeholder="Message" autocomplete="off">
+
+                <!-- Recording Bar -->
+                <div id="recording-bar" class="recording-bar" style="display: none;">
+                    <div class="rec-left">
+                        <i class="fas fa-microphone pulse"></i>
+                        <span id="recording-timer">0:00</span>
+                    </div>
+                    <div class="rec-center">
+                        <span class="slide-cancel">Recording...</span>
+                    </div>
+                    <button class="dismiss-voice-btn" onclick="cancelRecording()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Hidden native file inputs -->
+                <input type="file" id="image-input" accept="image/*" style="display:none">
+                <input type="file" id="video-input" accept="video/*" style="display:none">
+            </div>
+
+            <!-- Attachment Menu -->
+            <div class="attach-menu" id="attach-menu">
+                <button onclick="triggerFile('image')"><i class="fas fa-image"></i> Photo</button>
+                <button onclick="triggerFile('video')"><i class="fas fa-film"></i> Video</button>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button id="voice-btn" class="voice-btn"><i class="fas fa-microphone"></i></button>
+                <button id="send-btn" class="send-btn" style="display: none;"><i
+                        class="fas fa-paper-plane"></i></button>
+                <button id="send-rec-btn" class="send-btn" style="display: none;" onclick="stopAndSendVoice()"><i
+                        class="fas fa-arrow-up"></i></button>
+            </div>
+            <!-- Hidden Profile Input -->
+            <input type="file" id="profile-input" accept="image/*" style="display:none">
+        </footer>
+
+        <!-- Custom Modals Overlay -->
+        <div id="modal-overlay" class="modal-overlay">
+            <!-- Clear Chat Modal -->
+            <div id="clear-chat-modal" class="custom-modal">
+                <h3>Clear Chat?</h3>
+                <p>This will delete all messages for everyone.</p>
+                <div class="modal-buttons">
+                    <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+                    <button class="modal-btn primary" onclick="confirmClearChat()">Clear</button>
+                </div>
+            </div>
+
+            <!-- Change Password Modal -->
+            <div id="password-modal" class="custom-modal">
+                <h3>New Password</h3>
+                <p>Set a new calculator password.</p>
+                <div style="width:100%; padding:0 15px;">
+                    <input type="password" id="new-password-input" placeholder="New Password" class="custom-input">
+                </div>
+                <div class="modal-buttons">
+                    <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+                    <button class="modal-btn primary" onclick="submitNewPassword()">Change</button>
+                </div>
+            </div>
+
+            <!-- Profile Viewer Modal -->
+            <div id="profile-viewer-modal" class="custom-modal">
+                <h3 id="profile-viewer-name">Profile Picture</h3>
+                <div class="profile-img-container">
+                    <img id="profile-viewer-img" src="" alt="Profile">
+                </div>
+                <div class="modal-buttons">
+                    <button class="modal-btn primary" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Image Viewer -->
+    <div id="image-viewer" class="image-viewer" onclick="closeImageViewer()">
+        <span class="close-viewer">&times;</span>
+        <img id="viewed-image" src="" alt="Full size image">
+    </div>
+
+    <script type="module" src="chat.js"></script>
+</body>
+
+</html>
